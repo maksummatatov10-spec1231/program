@@ -1,0 +1,20 @@
+{
+    "name": "PhysSim.App",
+    "rootNamespace": "PhysSim.App",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Materials",
+        "PhysSim.Geometry",
+        "PhysSim.ImportExport",
+        "PhysSim.Interaction",
+        "PhysSim.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

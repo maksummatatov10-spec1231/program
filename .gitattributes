@@ -1,0 +1,12 @@
+* text=auto
+*.cs diff=csharp text
+*.meta text
+*.unity merge=unity
+*.prefab merge=unity
+*.asset merge=unity
+*.mat merge=unity
+*.anim merge=unity
+*.controller merge=unity
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text

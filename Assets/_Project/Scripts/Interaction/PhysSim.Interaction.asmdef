@@ -1,0 +1,14 @@
+{
+    "name": "PhysSim.Interaction",
+    "rootNamespace": "PhysSim.Interaction",
+    "references": [
+        "PhysSim.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

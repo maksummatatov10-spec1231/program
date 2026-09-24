@@ -1,0 +1,19 @@
+{
+    "name": "PhysSim.UI",
+    "rootNamespace": "PhysSim.UI",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Materials",
+        "PhysSim.Geometry",
+        "PhysSim.ImportExport",
+        "PhysSim.Interaction"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

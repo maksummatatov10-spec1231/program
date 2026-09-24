@@ -1,0 +1,17 @@
+{
+    "name": "PhysSim.ImportExport",
+    "rootNamespace": "PhysSim.ImportExport",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Materials",
+        "PhysSim.Geometry"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

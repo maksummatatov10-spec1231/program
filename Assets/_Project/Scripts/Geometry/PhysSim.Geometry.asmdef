@@ -1,0 +1,16 @@
+{
+    "name": "PhysSim.Geometry",
+    "rootNamespace": "PhysSim.Geometry",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Materials"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "noEngineReferences": false
+}
