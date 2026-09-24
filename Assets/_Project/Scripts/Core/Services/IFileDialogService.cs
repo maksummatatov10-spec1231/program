@@ -1,16 +1,16 @@
+using System;
+
 namespace PhysSim.Core
 {
     /// <summary>
-    /// Диалоги выбора файлов. Контракт живёт в Core, реализация — в UI
-    /// (StandaloneFileBrowser / EditorUtility). Импорт/экспорт не знает,
-    /// откуда пришёл путь (P5).
+    /// Диалоги выбора файлов. Контракт — в Core, реализация — в UI:
+    /// в редакторе нативные диалоги, в билде — встроенный модальный диалог.
+    /// Выбор пользователя приходит в колбэк (null — отмена).
     /// </summary>
     public interface IFileDialogService
     {
-        /// <summary>Открыть существующий файл. null — пользователь отменил.</summary>
-        string OpenFile(string title, params string[] extensions);
+        void OpenFile(string title, string extension, Action<string> onPicked);
 
-        /// <summary>Сохранить файл под именем. null — пользователь отменил.</summary>
-        string SaveFile(string title, string defaultName, string extension);
+        void SaveFile(string title, string defaultName, string extension, Action<string> onPicked);
     }
 }

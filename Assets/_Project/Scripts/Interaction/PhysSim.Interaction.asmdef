@@ -2,7 +2,9 @@
     "name": "PhysSim.Interaction",
     "rootNamespace": "PhysSim.Interaction",
     "references": [
-        "PhysSim.Core"
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Geometry"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

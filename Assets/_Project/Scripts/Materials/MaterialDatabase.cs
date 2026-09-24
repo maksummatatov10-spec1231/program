@@ -5,8 +5,10 @@ using UnityEngine;
 namespace PhysSim.Materials
 {
     /// <summary>
-    /// База всех материалов программы (ассет MaterialDatabase.asset).
-    /// Наполняется CSV-импортёром (M3), расширяется в рантайме через Register.
+    /// База всех материалов программы. Работает в двух режимах:
+    ///  1) ассет MaterialDatabase.asset (designer-workflow, наполняется CSV-импортёром);
+    ///  2) рантайм-экземпляр из встроенной таблицы MaterialSpecs (CreateRuntime) —
+    ///     используется AppBootstrap, если ассет не назначен. Игра работает без ассетов.
     /// </summary>
     [CreateAssetMenu(
         fileName = "MaterialDatabase",
@@ -68,7 +70,6 @@ namespace PhysSim.Materials
             return true;
         }
 
-        /// <summary>Все используемые категории (для фильтра библиотеки).</summary>
         public IEnumerable<MaterialCategory> GetCategories()
         {
             var seen = new HashSet<MaterialCategory>();
@@ -80,7 +81,26 @@ namespace PhysSim.Materials
             return seen;
         }
 
-        /// <summary>Перестроить индекс (OnEnable/после десериализации/массового импорта).</summary>
+        /// <summary>
+        /// Рантайм-база из встроенной таблицы: работает в билде без единого ассета.
+        /// </summary>
+        public static MaterialDatabase CreateRuntime(IReadOnlyList<MaterialSpec> specs, string defaultId)
+        {
+            var database = CreateInstance<MaterialDatabase>();
+            database.defaultMaterialId = defaultId;
+            for (var i = 0; i < specs.Count; i++)
+            {
+                var definition = CreateInstance<MaterialDefinition>();
+                definition.name = specs[i].Id;
+                definition.RuntimeSetup(specs[i]);
+                definition.hideFlags = HideFlags.HideAndDontSave; // не сохранять в сцену
+                database.Register(definition);
+            }
+
+            database.RebuildIndex();
+            return database;
+        }
+
         public void RebuildIndex()
         {
             _index = new Dictionary<string, MaterialDefinition>(materials.Count);
@@ -89,7 +109,7 @@ namespace PhysSim.Materials
                 var definition = materials[i];
                 if (definition == null || string.IsNullOrEmpty(definition.Id))
                 {
-                    continue; // битые ассеты не роняем — репортим при валидации (M3)
+                    continue;
                 }
 
                 if (!_index.TryAdd(definition.Id, definition))

@@ -5,19 +5,24 @@ using UnityEngine;
 namespace PhysSim.ImportExport
 {
     /// <summary>
-    /// Импортёр FBX через AssimpNet (единственный сторонний «жирный» компонент,
-    /// спрятан за IModelImporter — ARCHITECTURE.md §14, §17).
-    /// План реализации (M4):
-    ///  • AiImportFile → aiScene → обход нод (иерархия FBX → плоский список SceneObject v1);
-    ///  • мешы: aiMesh → Unity Mesh (позиции/нормали/UV/кости — кости в бэклоге);
-    ///  • координаты: RH+см (FBX-конвенция) → LH+м: флип X, scale 0.01 (параметр в опциях);
-    ///  • материалы: FbxSurfacePhong/Lambert → подбор ближайшего MaterialDefinition по имени;
-    ///  • нативные плагины (win/mac/linux) — в Assets/Plugins/, рядом с managed-сборкой.
-    /// Если плагин недоступен — импортёр честно сообщает об этом в StatusMessage,
-    /// приложение продолжает работать (OBJ-путь никуда не делся).
+    /// FBX — закрытый бинарный формат: в рантайме читается только через нативный
+    /// плагин (AssimpNet). v1 — честная заглушка: сообщает в статус-бар и не ломает
+    /// поток импорта (OBJ работает полностью). Путь подключения — docs/BUILD_RU.md §5:
+    ///  1) AssimpNet managed-DLL в Assets/Plugins/, нативные — в Plugins/x86_64;
+    ///  2) AiImportFile → aiScene → обход нод (иерархия FBX → плоский список объектов v1);
+    ///  3) aiMesh → Unity Mesh (позиции/нормали/UV), флип X + см→м;
+    ///  4) материал — по имени FbxSurfacePhong → ближайший MaterialDefinition;
+    ///  5) фабрика.CreateFromMesh — дальше общий конвейер (объём, масса, материал).
     /// </summary>
     public sealed class FbxImporter : MonoBehaviour, IModelImporter
     {
+        private EventBus _bus;
+
+        public void Configure(EventBus bus)
+        {
+            _bus = bus;
+        }
+
         public string[] SupportedExtensions
         {
             get { return new[] { "fbx" }; }
@@ -30,7 +35,16 @@ namespace PhysSim.ImportExport
 
         public SceneObject[] Import(string filePath, ImportOptions options)
         {
-            throw new NotImplementedException("M4: FBX через AssimpNet");
+            if (_bus != null)
+            {
+                _bus.Publish(new StatusMessage("warn", UiStrings.FbxNeedsPlugin));
+            }
+            else
+            {
+                Debug.LogWarning(UiStrings.FbxNeedsPlugin);
+            }
+
+            return Array.Empty<SceneObject>();
         }
     }
 }

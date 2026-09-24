@@ -103,6 +103,18 @@ namespace PhysSim.Core
         }
     }
 
+    public readonly struct ObjectRenamed
+    {
+        public readonly ObjectId Id;
+        public readonly string Name;
+
+        public ObjectRenamed(ObjectId id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+    }
+
     public readonly struct SceneSaved
     {
         public readonly string Path;

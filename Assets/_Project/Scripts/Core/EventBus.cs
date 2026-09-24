@@ -13,7 +13,30 @@ namespace PhysSim.Core
         private readonly Dictionary<Type, List<Delegate>> _subscribers =
             new Dictionary<Type, List<Delegate>>(32);
 
-        public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : struct
+        /// <summary>Токен подписки: храните и вызовите Dispose() при закрытии панели.</summary>
+        public readonly struct Subscription : IDisposable
+        {
+            private readonly EventBus _bus;
+            private readonly Type _eventType;
+            private readonly Delegate _handler;
+
+            public Subscription(EventBus bus, Type eventType, Delegate handler)
+            {
+                _bus = bus;
+                _eventType = eventType;
+                _handler = handler;
+            }
+
+            public void Dispose()
+            {
+                if (_bus != null && _bus._subscribers.TryGetValue(_eventType, out var list))
+                {
+                    list.Remove(_handler);
+                }
+            }
+        }
+
+        public Subscription Subscribe<TEvent>(Action<TEvent> handler) where TEvent : struct
         {
             if (handler == null)
             {
@@ -30,6 +53,8 @@ namespace PhysSim.Core
             {
                 list.Add(handler);
             }
+
+            return new Subscription(this, typeof(TEvent), handler);
         }
 
         public void Unsubscribe<TEvent>(Action<TEvent> handler) where TEvent : struct

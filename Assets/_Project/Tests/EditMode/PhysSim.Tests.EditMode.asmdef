@@ -1,0 +1,25 @@
+{
+    "name": "PhysSim.Tests.EditMode",
+    "rootNamespace": "PhysSim.Tests",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Geometry",
+        "PhysSim.Materials",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,23 @@
+{
+    "name": "PhysSim.Editor",
+    "rootNamespace": "PhysSim.EditorTools",
+    "references": [
+        "PhysSim.Core",
+        "PhysSim.Simulation",
+        "PhysSim.Materials",
+        "PhysSim.Geometry",
+        "PhysSim.ImportExport",
+        "PhysSim.Interaction",
+        "PhysSim.UI",
+        "PhysSim.App"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "noEngineReferences": false
+}
